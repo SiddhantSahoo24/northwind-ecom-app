@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import { buttonStyles } from "@/components/ui";
+import { buttonStyles, fieldStyles } from "@/components/ui";
 
 /**
  * The sign-in surface, deliberately not yet connected.
@@ -23,9 +23,6 @@ export function SignInForm() {
   const [password, setPassword] = useState("");
   const [notice, setNotice] = useState(false);
 
-  const fieldStyles =
-    "h-11 w-full rounded-xl border border-line bg-surface px-4 text-sm outline-none placeholder:text-muted focus:border-accent";
-
   return (
     <div className="mt-8">
       <form
@@ -36,7 +33,7 @@ export function SignInForm() {
         }}
       >
         <div className="space-y-1.5">
-          <label htmlFor="email" className="text-sm font-medium">
+          <label htmlFor="email" className="label text-muted">
             Email
           </label>
           <input
@@ -53,10 +50,10 @@ export function SignInForm() {
 
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <label htmlFor="password" className="text-sm font-medium">
+            <label htmlFor="password" className="label text-muted">
               Password
             </label>
-            <span className="text-xs text-muted">Forgot it?</span>
+            <span className="label text-muted">Forgot it?</span>
           </div>
           <input
             id="password"
@@ -78,9 +75,9 @@ export function SignInForm() {
       {notice ? (
         <div
           role="status"
-          className="mt-5 rounded-xl border border-line bg-ink/[0.03] p-4 text-sm dark:bg-white/5"
+          className="mt-5 border-l-2 border-accent bg-plate p-4 text-sm"
         >
-          <p className="font-semibold">Auth is not wired up yet.</p>
+          <p className="font-medium">Auth is not wired up yet.</p>
           <p className="mt-1.5 text-muted">
             The route at <code className="font-mono">/api/auth/[...all]</code> is
             live, but <code className="font-mono">betterAuth()</code> has no
@@ -94,7 +91,7 @@ export function SignInForm() {
 
       <div className="mt-8 flex items-center gap-3">
         <span className="h-px flex-1 bg-line" />
-        <span className="text-xs text-muted uppercase">or</span>
+        <span className="label text-muted">or</span>
         <span className="h-px flex-1 bg-line" />
       </div>
 
@@ -111,9 +108,9 @@ export function SignInForm() {
         ))}
       </div>
 
-      <p className="mt-8 text-center text-sm text-muted">
+      <p className="label mt-8 text-center text-muted">
         New here?{" "}
-        <Link href="/login" className="font-semibold text-ink hover:underline">
+        <Link href="/login" className="text-ink hover:text-accent">
           Create an account
         </Link>
       </p>

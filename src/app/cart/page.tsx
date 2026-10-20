@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { CartView } from "@/components/cart-view";
+import { Container, Dot } from "@/components/ui";
 import { getProducts } from "@/lib/products";
 
 export const metadata: Metadata = {
@@ -14,11 +15,21 @@ export default async function CartPage() {
   const products = await getProducts();
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
-      <h1 className="mb-8 text-3xl font-semibold tracking-tight sm:text-4xl">
-        Your cart
-      </h1>
-      <CartView products={products} />
-    </div>
+    <>
+      <div className="dot-field border-b border-line">
+        <Container className="py-12 sm:py-16">
+          <p className="label flex items-center gap-2 text-accent">
+            <Dot />
+            Bag
+          </p>
+          <h1 className="mt-6 text-4xl font-medium tracking-tighter sm:text-6xl">
+            Your cart.
+          </h1>
+        </Container>
+      </div>
+      <Container className="py-10 sm:py-14">
+        <CartView products={products} />
+      </Container>
+    </>
   );
 }

@@ -14,23 +14,18 @@ export function Stars({
   const rounded = Math.round(rating);
 
   return (
-    <div className={`flex items-center gap-1.5 ${className}`}>
-      <div className="flex" aria-hidden="true">
+    <div className={`flex items-center gap-2 ${className}`}>
+      <div className="flex gap-px" aria-hidden="true">
         {[1, 2, 3, 4, 5].map((step) => (
-          <svg
+          <span
             key={step}
-            viewBox="0 0 20 20"
-            className={`h-3.5 w-3.5 ${
-              step <= rounded ? "fill-amber-500" : "fill-zinc-300 dark:fill-zinc-700"
-            }`}
-          >
-            <path d="M10 1.5l2.47 5.26 5.53.74-4.05 4.03 1.02 5.72L10 14.6l-4.97 2.65 1.02-5.72L2 7.5l5.53-.74z" />
-          </svg>
+            className={`h-1.5 w-1.5 ${step <= rounded ? "bg-ink" : "bg-line"}`}
+          />
         ))}
       </div>
-      <span className="text-xs text-muted">
+      <span className="label text-muted tabular-nums">
         {rating.toFixed(1)}
-        {typeof reviewCount === "number" ? ` (${reviewCount})` : ""}
+        {typeof reviewCount === "number" ? ` / ${reviewCount}` : ""}
         <span className="sr-only"> out of 5</span>
       </span>
     </div>
@@ -42,30 +37,44 @@ export function Badge({
   tone = "accent",
 }: {
   children: React.ReactNode;
-  tone?: "accent" | "muted" | "sale";
+  tone?: "accent" | "muted" | "sale" | "outline";
 }) {
   const tones = {
     accent: "bg-accent text-accent-fg",
-    muted: "bg-zinc-900/80 text-white dark:bg-white/90 dark:text-zinc-900",
-    sale: "bg-rose-600 text-white",
+    muted: "bg-ink text-page",
+    sale: "bg-accent text-accent-fg",
+    outline: "border border-current text-ink",
   };
 
   return (
-    <span
-      className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold tracking-wide uppercase ${tones[tone]}`}
-    >
+    <span className={`label inline-flex items-center px-2 py-1 ${tones[tone]}`}>
       {children}
     </span>
   );
 }
 
+/** A small red dot, the one piece of colour on an otherwise grey row. */
+export function Dot({ className = "" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-block h-1.5 w-1.5 rounded-full bg-accent ${className}`}
+    />
+  );
+}
+
+/**
+ * Buttons are squared and sit flush against the hairline grid. `h-12` is the
+ * shared control height — the header search and the sign-in fields match it.
+ */
 const buttonBase =
-  "inline-flex h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+  "inline-flex h-12 items-center justify-center gap-2 px-7 label transition-colors disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 export const buttonStyles = {
-  primary: `${buttonBase} bg-ink text-surface hover:bg-ink/85`,
+  primary: `${buttonBase} bg-ink text-page hover:bg-accent hover:text-accent-fg`,
   accent: `${buttonBase} bg-accent text-accent-fg hover:brightness-110`,
-  outline: `${buttonBase} border border-line bg-transparent text-ink hover:bg-ink/5 dark:hover:bg-white/10`,
+  outline: `${buttonBase} border border-ink bg-transparent text-ink hover:bg-ink hover:text-page`,
+  quiet: `${buttonBase} border border-line bg-transparent text-muted hover:border-ink hover:text-ink`,
 };
 
 export function ButtonLink({
@@ -86,29 +95,64 @@ export function ButtonLink({
   );
 }
 
+/** Shared form control styling — header search and the sign-in fields. */
+export const fieldStyles =
+  "h-12 w-full border border-line bg-transparent px-4 text-sm outline-none placeholder:text-muted focus:border-ink";
+
+/**
+ * Section wrapper. The heading sits on a hairline rule with a numbered index
+ * on the left, which is what gives the pages their drawing-sheet feel.
+ */
 export function Section({
+  index,
   title,
   description,
   action,
   children,
+  className = "",
 }: {
+  /** Two-digit section marker, e.g. "02". */
+  index?: string;
   title: string;
   description?: string;
   action?: React.ReactNode;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <section className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8 sm:py-20">
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h2>
-          {description ? (
-            <p className="mt-2 max-w-xl text-muted">{description}</p>
-          ) : null}
+    <section className={`border-t border-line ${className}`}>
+      <div className="mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <div className="flex items-center gap-3">
+              {index ? <span className="label text-accent">{index}</span> : null}
+              <span className="label text-muted">{title}</span>
+            </div>
+            {description ? (
+              <h2 className="mt-4 max-w-2xl text-2xl font-medium tracking-tight text-balance sm:text-4xl">
+                {description}
+              </h2>
+            ) : null}
+          </div>
+          {action}
         </div>
-        {action}
+        {children}
       </div>
-      {children}
     </section>
+  );
+}
+
+/** Page-level container, matched across every route. */
+export function Container({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`mx-auto w-full max-w-7xl px-5 sm:px-8 ${className}`}>
+      {children}
+    </div>
   );
 }

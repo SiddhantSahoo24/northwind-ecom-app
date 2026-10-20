@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import { ProductGrid, ProductGridSkeleton } from "@/components/product-card";
-import { categories, getProducts, sortOptions } from "@/lib/products";
+import { Container, Dot } from "@/components/ui";
+import { getCategories, getProducts, sortOptions } from "@/lib/products";
 
 export const metadata: Metadata = {
   title: "Shop all",
@@ -26,15 +27,21 @@ function buildHref(current: Record<string, string | undefined>, patch: Record<st
 
 export default function ProductsPage({ searchParams }: PageProps<"/products">) {
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
-      <header className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          Everything we make
-        </h1>
-        <p className="mt-2 max-w-xl text-muted">
-          Twelve products across four collections. Filter, sort, or just scroll.
-        </p>
-      </header>
+    <>
+      <div className="dot-field border-b border-line">
+        <Container className="py-14 sm:py-20">
+          <p className="label flex items-center gap-2 text-accent">
+            <Dot />
+            Catalogue
+          </p>
+          <h1 className="mt-6 max-w-2xl text-4xl font-medium tracking-tighter text-balance sm:text-6xl">
+            Everything we make.
+          </h1>
+          <p className="mt-6 max-w-md text-muted">
+            Twelve products across four lines. Filter, sort, or just scroll.
+          </p>
+        </Container>
+      </div>
 
       {/*
         searchParams is request-time data. Reading it inside this boundary means
@@ -44,16 +51,22 @@ export default function ProductsPage({ searchParams }: PageProps<"/products">) {
       <Suspense fallback={<ListingFallback />}>
         <Listing searchParams={searchParams} />
       </Suspense>
-    </div>
+    </>
   );
 }
 
 function ListingFallback() {
   return (
-    <div className="space-y-8">
-      <div className="h-9 w-full max-w-md animate-pulse rounded-full bg-ink/5 dark:bg-white/5" />
-      <ProductGridSkeleton />
-    </div>
+    <>
+      <div className="border-b border-line">
+        <Container className="flex h-14 items-center">
+          <div className="h-3 w-64 animate-pulse bg-plate" />
+        </Container>
+      </div>
+      <Container className="py-10">
+        <ProductGridSkeleton />
+      </Container>
+    </>
   );
 }
 
@@ -67,72 +80,82 @@ async function Listing({
   const sort = first(params.sort) ?? "featured";
   const q = first(params.q) ?? "";
 
-  const products = await getProducts({ category, sort, q });
+  const [products, categories] = await Promise.all([
+    getProducts({ category, sort, q }),
+    getCategories(),
+  ]);
   const current = { category, sort, q: q || undefined };
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <nav className="flex flex-wrap gap-2" aria-label="Filter by category">
-          {[{ slug: "all", name: "All" }, ...categories].map((option) => {
-            const active = category === option.slug;
-            return (
-              <Link
-                key={option.slug}
-                href={buildHref(current, { category: option.slug })}
-                aria-current={active ? "page" : undefined}
-                className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
-                  active
-                    ? "border-ink bg-ink text-surface"
-                    : "border-line text-muted hover:border-ink hover:text-ink"
-                }`}
-              >
-                {option.name}
-              </Link>
-            );
-          })}
-        </nav>
+    <>
+      {/* Filter bar sticks under the header so the rules stay continuous. */}
+      <div className="sticky top-16 z-30 border-b border-line bg-page/90 backdrop-blur-md">
+        <Container className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
+          <nav className="flex flex-wrap items-center gap-1" aria-label="Filter by category">
+            {[{ slug: "all", name: "All" }, ...categories].map((option) => {
+              const active = category === option.slug;
+              return (
+                <Link
+                  key={option.slug}
+                  href={buildHref(current, { category: option.slug })}
+                  aria-current={active ? "page" : undefined}
+                  className={`label px-3 py-2 transition-colors ${
+                    active
+                      ? "bg-ink text-page"
+                      : "text-muted hover:text-ink"
+                  }`}
+                >
+                  {option.name}
+                </Link>
+              );
+            })}
+          </nav>
 
-        <div className="flex flex-wrap items-center gap-2 text-sm">
-          <span className="text-muted">Sort</span>
-          {sortOptions.map((option) => {
-            const active = sort === option.key;
-            return (
-              <Link
-                key={option.key}
-                href={buildHref(current, { sort: option.key })}
-                className={`rounded-full px-3 py-1.5 transition-colors ${
-                  active
-                    ? "bg-accent/10 font-semibold text-accent"
-                    : "text-muted hover:text-ink"
-                }`}
-              >
-                {option.label}
-              </Link>
-            );
-          })}
-        </div>
+          <div className="flex flex-wrap items-center gap-1">
+            <span className="label mr-1 text-muted">Sort</span>
+            {sortOptions.map((option) => {
+              const active = sort === option.key;
+              return (
+                <Link
+                  key={option.key}
+                  href={buildHref(current, { sort: option.key })}
+                  className={`label border-b-2 px-2 py-2 transition-colors ${
+                    active
+                      ? "border-accent text-ink"
+                      : "border-transparent text-muted hover:text-ink"
+                  }`}
+                >
+                  {option.label}
+                </Link>
+              );
+            })}
+          </div>
+        </Container>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
-        <span>
-          {products.length} {products.length === 1 ? "product" : "products"}
-        </span>
-        {q ? (
-          <span className="inline-flex items-center gap-2 rounded-full bg-ink/5 px-3 py-1 dark:bg-white/10">
-            Search: <strong className="font-semibold text-ink">{q}</strong>
-            <Link
-              href={buildHref(current, { q: undefined })}
-              aria-label="Clear search"
-              className="text-muted hover:text-ink"
-            >
-              ✕
-            </Link>
+      <Container className="py-8 sm:py-10">
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <span className="label text-muted tabular-nums">
+            {String(products.length).padStart(2, "0")}{" "}
+            {products.length === 1 ? "result" : "results"}
           </span>
-        ) : null}
-      </div>
+          {q ? (
+            <span className="label inline-flex items-center gap-2 border border-line px-3 py-1.5">
+              <span className="text-muted">Search</span>
+              <strong className="font-medium text-ink normal-case">{q}</strong>
+              <Link
+                href={buildHref(current, { q: undefined })}
+                aria-label="Clear search"
+                className="text-muted hover:text-accent"
+              >
+                ✕
+              </Link>
+            </span>
+          ) : null}
+        </div>
 
-      <ProductGrid products={products} />
-    </div>
+        <ProductGrid products={products} priorityCount={4} />
+      </Container>
+    </>
   );
 }

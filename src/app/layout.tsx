@@ -17,11 +17,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Northwind — well-made things",
+    default: "Northwind — hardware that gets out of the way",
     template: "%s · Northwind",
   },
   description:
-    "A demo storefront built on Next.js, Drizzle, and Better Auth.",
+    "Audio, wearables and phone hardware. A demo storefront built on Next.js, Drizzle, and Better Auth.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

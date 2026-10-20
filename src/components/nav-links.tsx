@@ -31,10 +31,10 @@ export function NavLinks({
           <Link
             key={link.href}
             href={link.href}
-            className={`shrink-0 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+            className={`label shrink-0 border-b-2 px-3 py-2 transition-colors ${
               active
-                ? "bg-ink/5 text-ink dark:bg-white/10"
-                : "text-muted hover:text-ink"
+                ? "border-accent text-ink"
+                : "border-transparent text-muted hover:text-ink"
             }`}
           >
             {link.label}

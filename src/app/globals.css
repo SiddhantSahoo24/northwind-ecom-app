@@ -3,6 +3,10 @@
 /**
  * Storefront theme.
  *
+ * Near-monochrome: a white page, near-black ink, hairline rules, and one
+ * saturated red reserved for live/sale/alert states. Nothing else carries hue,
+ * so the product photography is the only colour on most screens.
+ *
  * These go in a plain `@theme` block with literal values, not `@theme inline`
  * pointing at separate :root custom properties — that indirection did not
  * register the colour namespace, so no background or text utilities were
@@ -10,27 +14,33 @@
  * which makes dark mode a matter of reassigning them.
  */
 @theme {
-  --color-page: #faf9f7;
+  --color-page: #ffffff;
   --color-surface: #ffffff;
-  --color-ink: #18181b;
-  --color-muted: #71717a;
-  --color-line: #e7e5e1;
-  --color-accent: #0f766e;
+  /* Plate: the flat field product shots sit on. */
+  --color-plate: #f2f2f2;
+  --color-ink: #0a0a0a;
+  --color-muted: #727272;
+  --color-line: #e3e3e3;
+  --color-accent: #d81f26;
   --color-accent-fg: #ffffff;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* The design is squared off; only pills and the odd chip round. */
+  --radius-none: 0px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-page: #09090b;
-    --color-surface: #121214;
-    --color-ink: #fafafa;
-    --color-muted: #a1a1aa;
-    --color-line: #27272a;
-    --color-accent: #2dd4bf;
-    --color-accent-fg: #042f2e;
+    --color-page: #000000;
+    --color-surface: #0a0a0a;
+    --color-plate: #141414;
+    --color-ink: #f5f5f5;
+    --color-muted: #8c8c8c;
+    --color-line: #232323;
+    --color-accent: #ff3b30;
+    --color-accent-fg: #ffffff;
   }
 }
 
@@ -44,4 +54,49 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+@utility label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/**
+ * Dot field. A generic halftone motif used behind the hero and the footer so
+ * large empty areas read as deliberate rather than unfinished. Pure CSS, so it
+ * costs nothing to download and scales to any box.
+ */
+@utility dot-field {
+  background-image: radial-gradient(
+    var(--color-line) 1px,
+    transparent 1px
+  );
+  background-size: 14px 14px;
+  background-position: -1px -1px;
+}
+
+/* Marquee for the announcement strip. Single transform, GPU-composited. */
+@keyframes ticker {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@utility ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 36s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
 }
