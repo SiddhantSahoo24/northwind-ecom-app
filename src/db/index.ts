@@ -24,8 +24,11 @@ function getDb(): Database {
 }
 
 /**
- * Drizzle client, constructed on first use rather than on import — otherwise
- * `next build` would need a live DATABASE_URL just to collect page data.
+ * Drizzle client, constructed on first use rather than on import.
+ *
+ * Note that this defers the connection, it does not avoid one: the cached
+ * accessors in src/lib/products.ts run during prerendering, so `next build`
+ * does need a reachable DATABASE_URL.
  */
 export const db = new Proxy({} as Database, {
   get: (_target, prop) => getDb()[prop as keyof Database],

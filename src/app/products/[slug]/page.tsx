@@ -4,12 +4,11 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import { AddToCart } from "@/components/add-to-cart";
-import { ProductArt } from "@/components/product-art";
 import { ProductGrid } from "@/components/product-card";
-import { Badge, ButtonLink, Stars } from "@/components/ui";
+import { ProductImage } from "@/components/product-image";
+import { Badge, ButtonLink, Container, Dot, Stars } from "@/components/ui";
 import { discountLabel, formatPrice } from "@/lib/format";
 import {
-  categories,
   getAllProductSlugs,
   getProductBySlug,
   getRelatedProducts,
@@ -49,11 +48,9 @@ export async function generateMetadata({
  */
 export default function ProductPage({ params }: PageProps<"/products/[slug]">) {
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
-      <Suspense fallback={<ProductDetailSkeleton />}>
-        <ProductDetail params={params} />
-      </Suspense>
-    </div>
+    <Suspense fallback={<ProductDetailSkeleton />}>
+      <ProductDetail params={params} />
+    </Suspense>
   );
 }
 
@@ -69,142 +66,167 @@ async function ProductDetail({
   // rather than a rendered page.
   if (!product) notFound();
 
-  const related = await getRelatedProducts(slug, 3);
-  const category = categories.find((c) => c.slug === product.category);
+  const related = await getRelatedProducts(slug, 4);
   const onSale = typeof product.compareAtCents === "number";
 
   return (
     <>
-      <nav className="mb-8 flex flex-wrap items-center gap-2 text-sm text-muted">
-        <Link href="/products" className="hover:text-ink">
-          Shop
-        </Link>
-        <span aria-hidden="true">/</span>
-        <Link href={`/products?category=${product.category}`} className="hover:text-ink">
-          {category?.name}
-        </Link>
-        <span aria-hidden="true">/</span>
-        <span className="text-ink">{product.name}</span>
-      </nav>
+      <div className="border-b border-line">
+        <Container>
+          <nav className="label flex flex-wrap items-center gap-2 py-4 text-muted">
+            <Link href="/products" className="hover:text-ink">
+              Shop
+            </Link>
+            <span aria-hidden="true">/</span>
+            <Link
+              href={`/products?category=${product.category}`}
+              className="hover:text-ink"
+            >
+              {product.categoryName}
+            </Link>
+            <span aria-hidden="true">/</span>
+            <span className="text-ink">{product.name}</span>
+          </nav>
+        </Container>
+      </div>
 
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-        <div className="relative overflow-hidden rounded-3xl border border-line">
-          <ProductArt
-            category={product.category}
-            slug={product.slug}
-            className="aspect-square w-full"
-          />
-          <div className="absolute top-4 left-4 flex gap-2">
-            {product.badge ? <Badge tone="muted">{product.badge}</Badge> : null}
-            {onSale ? (
-              <Badge tone="sale">
-                {discountLabel(product.priceCents, product.compareAtCents!)}
-              </Badge>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="flex flex-col">
-          <p className="text-xs font-semibold tracking-[0.2em] text-accent uppercase">
-            {category?.name}
-          </p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            {product.name}
-          </h1>
-
-          <div className="mt-4">
-            <Stars rating={product.rating} reviewCount={product.reviewCount} />
-          </div>
-
-          <div className="mt-6 flex items-baseline gap-3">
-            <span className="text-3xl font-semibold">
-              {formatPrice(product.priceCents)}
-            </span>
-            {onSale ? (
-              <span className="text-lg text-muted line-through">
-                {formatPrice(product.compareAtCents!)}
-              </span>
-            ) : null}
-          </div>
-
-          <p className="mt-6 text-muted">{product.description}</p>
-
-          <ul className="mt-6 space-y-2.5">
-            {product.features.map((feature) => (
-              <li key={feature} className="flex items-start gap-3 text-sm">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="mt-0.5 h-4 w-4 shrink-0 text-accent"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                >
-                  <path d="M4 12.5l5 5L20 7" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                {feature}
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <AddToCart
-              slug={product.slug}
-              inStock={product.inStock}
-              className="min-w-44 flex-1"
+      <div className="border-b border-line">
+        <div className="mx-auto grid w-full max-w-7xl lg:grid-cols-2">
+          {/* The shot runs to the edge of its column; the rule between the two
+              halves is the only separator. */}
+          <div className="relative lg:border-r lg:border-line">
+            <ProductImage
+              imageKey={product.slug}
+              alt={`${product.name} — ${product.colorway}`}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              priority
+              // Square on mobile; on desktop the shot stretches to whatever
+              // height the spec column needs, so the dividing rule runs the
+              // full height of the block instead of stopping short.
+              className="aspect-square w-full lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
             />
-            <ButtonLink href="/cart" variant="outline">
-              View cart
-            </ButtonLink>
+            <div className="absolute top-4 left-4 flex gap-1.5">
+              {product.badge ? <Badge tone="muted">{product.badge}</Badge> : null}
+              {onSale ? (
+                <Badge tone="sale">
+                  {discountLabel(product.priceCents, product.compareAtCents!)}
+                </Badge>
+              ) : null}
+            </div>
           </div>
 
-          <dl className="mt-8 grid gap-4 border-t border-line pt-6 text-sm sm:grid-cols-3">
-            <div>
-              <dt className="font-semibold">Delivery</dt>
-              <dd className="text-muted">2-4 working days</dd>
+          <div className="flex flex-col px-5 py-10 sm:px-8 sm:py-14">
+            <p className="label flex items-center gap-2 text-accent">
+              <Dot />
+              {product.categoryName}
+            </p>
+            <h1 className="mt-6 text-3xl font-medium tracking-tighter text-balance sm:text-5xl">
+              {product.name}
+            </h1>
+            <p className="label mt-4 text-muted">{product.colorway}</p>
+
+            <div className="mt-6">
+              <Stars rating={product.rating} reviewCount={product.reviewCount} />
             </div>
-            <div>
-              <dt className="font-semibold">Returns</dt>
-              <dd className="text-muted">30 days, unused</dd>
+
+            <div className="mt-8 flex items-baseline gap-3">
+              <span className="font-mono text-3xl tabular-nums">
+                {formatPrice(product.priceCents)}
+              </span>
+              {onSale ? (
+                <span className="font-mono text-base text-muted line-through tabular-nums">
+                  {formatPrice(product.compareAtCents!)}
+                </span>
+              ) : null}
             </div>
-            <div>
-              <dt className="font-semibold">Warranty</dt>
-              <dd className="text-muted">Two years</dd>
+
+            <p className="mt-6 text-muted">{product.description}</p>
+
+            <ul className="mt-8 divide-y divide-line border-y border-line">
+              {product.features.map((feature) => (
+                <li key={feature} className="flex items-start gap-3 py-3 text-sm">
+                  <Dot className="mt-2 shrink-0" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <AddToCart
+                slug={product.slug}
+                inStock={product.inStock}
+                className="min-w-44 flex-1"
+              />
+              <ButtonLink href="/cart" variant="outline">
+                View cart
+              </ButtonLink>
             </div>
-          </dl>
+
+            <dl className="mt-10 grid grid-cols-2 gap-px border border-line bg-line">
+              {product.specs.map((spec) => (
+                <div key={spec.label} className="bg-page px-4 py-4">
+                  <dt className="label text-muted">{spec.label}</dt>
+                  <dd className="mt-2 text-sm font-medium">{spec.value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <dl className="label mt-6 grid gap-3 text-muted sm:grid-cols-3">
+              <div>
+                <dt>Delivery</dt>
+                <dd className="mt-1 text-ink">2–4 days</dd>
+              </div>
+              <div>
+                <dt>Returns</dt>
+                <dd className="mt-1 text-ink">30 days</dd>
+              </div>
+              <div>
+                <dt>Warranty</dt>
+                <dd className="mt-1 text-ink">Two years</dd>
+              </div>
+            </dl>
+          </div>
         </div>
       </div>
 
       {related.length > 0 ? (
-        <section className="mt-20">
-          <h2 className="mb-6 text-2xl font-semibold tracking-tight">
-            You might also like
-          </h2>
+        <Container className="py-14 sm:py-20">
+          <div className="mb-10 flex items-center gap-3">
+            <span className="label text-accent">+</span>
+            <span className="label text-muted">You might also like</span>
+          </div>
           <ProductGrid products={related} />
-        </section>
+        </Container>
       ) : null}
     </>
   );
 }
 
 function ProductDetailSkeleton() {
-  const bar = "animate-pulse rounded bg-ink/5 dark:bg-white/5";
-
   return (
     <>
-      <div className={`mb-8 h-4 w-64 ${bar}`} />
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-        <div className={`aspect-square w-full rounded-3xl ${bar}`} />
-        <div className="space-y-5">
-          <div className={`h-3 w-24 ${bar}`} />
-          <div className={`h-10 w-3/4 ${bar}`} />
-          <div className={`h-4 w-32 ${bar}`} />
-          <div className={`h-8 w-28 ${bar}`} />
-          <div className="space-y-2">
-            <div className={`h-4 w-full ${bar}`} />
-            <div className={`h-4 w-full ${bar}`} />
-            <div className={`h-4 w-2/3 ${bar}`} />
+      <div className="border-b border-line">
+        <Container>
+          <div className="py-4">
+            <div className="h-3 w-56 animate-pulse bg-plate" />
           </div>
-          <div className={`h-11 w-full rounded-full ${bar}`} />
+        </Container>
+      </div>
+      <div className="border-b border-line">
+        <div className="mx-auto grid w-full max-w-7xl lg:grid-cols-2">
+          <div className="aspect-square w-full animate-pulse bg-plate lg:border-r lg:border-line" />
+          <div className="space-y-5 px-5 py-10 sm:px-8 sm:py-14">
+            <div className="h-3 w-20 animate-pulse bg-plate" />
+            <div className="h-12 w-3/4 animate-pulse bg-plate" />
+            <div className="h-3 w-28 animate-pulse bg-plate" />
+            <div className="h-8 w-32 animate-pulse bg-plate" />
+            <div className="space-y-2 pt-4">
+              <div className="h-4 w-full animate-pulse bg-plate" />
+              <div className="h-4 w-full animate-pulse bg-plate" />
+              <div className="h-4 w-2/3 animate-pulse bg-plate" />
+            </div>
+            <div className="h-12 w-full animate-pulse bg-plate" />
+          </div>
         </div>
       </div>
     </>

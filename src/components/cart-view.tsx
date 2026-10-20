@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { useCart } from "@/components/cart-store";
-import { ProductArt } from "@/components/product-art";
+import { ProductImage } from "@/components/product-image";
 import { buttonStyles } from "@/components/ui";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/products";
@@ -26,12 +26,9 @@ export function CartView({ products }: { products: Product[] }) {
 
   if (!hydrated) {
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-px border border-line bg-line">
         {[0, 1].map((index) => (
-          <div
-            key={index}
-            className="h-28 animate-pulse rounded-2xl bg-ink/5 dark:bg-white/5"
-          />
+          <div key={index} className="h-32 animate-pulse bg-plate" />
         ))}
       </div>
     );
@@ -39,13 +36,13 @@ export function CartView({ products }: { products: Product[] }) {
 
   if (items.length === 0) {
     return (
-      <div className="rounded-3xl border border-dashed border-line px-6 py-20 text-center">
-        <h2 className="text-xl font-semibold">Your cart is empty</h2>
-        <p className="mt-2 text-muted">
+      <div className="dot-field border border-line px-6 py-24 text-center">
+        <h2 className="text-2xl font-medium tracking-tight">Your cart is empty</h2>
+        <p className="mx-auto mt-3 max-w-sm text-muted">
           Nothing in here yet. The catalogue is twelve products long — it will
           not take you long.
         </p>
-        <Link href="/products" className={`${buttonStyles.primary} mt-6`}>
+        <Link href="/products" className={`${buttonStyles.primary} mt-8`}>
           Start shopping
         </Link>
       </div>
@@ -60,18 +57,16 @@ export function CartView({ products }: { products: Product[] }) {
   const toFreeShipping = FREE_SHIPPING_THRESHOLD_CENTS - subtotal;
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr] lg:items-start">
-      <ul className="divide-y divide-line rounded-2xl border border-line bg-surface">
+    <div className="grid gap-px border border-line bg-line lg:grid-cols-[1.7fr_1fr] lg:items-start">
+      <ul className="divide-y divide-line bg-page">
         {items.map(({ product, qty }) => (
-          <li key={product.slug} className="flex gap-4 p-4 sm:gap-5 sm:p-5">
-            <Link
-              href={`/products/${product.slug}`}
-              className="h-24 w-24 shrink-0 overflow-hidden rounded-xl sm:h-28 sm:w-28"
-            >
-              <ProductArt
-                category={product.category}
-                slug={`cart-${product.slug}`}
-                className="h-full w-full"
+          <li key={product.slug} className="flex gap-4 p-4 sm:gap-6 sm:p-5">
+            <Link href={`/products/${product.slug}`} className="shrink-0">
+              <ProductImage
+                imageKey={product.slug}
+                alt=""
+                sizes="112px"
+                className="h-24 w-24 sm:h-28 sm:w-28"
               />
             </Link>
 
@@ -80,35 +75,35 @@ export function CartView({ products }: { products: Product[] }) {
                 <div className="min-w-0">
                   <Link
                     href={`/products/${product.slug}`}
-                    className="font-semibold hover:underline"
+                    className="font-medium tracking-tight hover:text-accent"
                   >
                     {product.name}
                   </Link>
-                  <p className="truncate text-sm text-muted">{product.blurb}</p>
+                  <p className="label mt-1.5 text-muted">{product.colorway}</p>
                 </div>
-                <span className="shrink-0 font-semibold tabular-nums">
+                <span className="shrink-0 font-mono text-sm tabular-nums">
                   {formatPrice(product.priceCents * qty)}
                 </span>
               </div>
 
               <div className="mt-auto flex items-center justify-between gap-3">
-                <div className="inline-flex items-center rounded-full border border-line">
+                <div className="inline-flex items-center border border-line">
                   <button
                     type="button"
                     onClick={() => setQty(product.slug, qty - 1)}
                     aria-label={`Decrease quantity of ${product.name}`}
-                    className="grid h-9 w-9 place-items-center rounded-l-full text-lg leading-none hover:bg-ink/5 dark:hover:bg-white/10"
+                    className="grid h-9 w-9 place-items-center text-lg leading-none transition-colors hover:bg-ink hover:text-page"
                   >
                     −
                   </button>
-                  <span className="w-9 text-center text-sm font-semibold tabular-nums">
+                  <span className="w-9 text-center font-mono text-sm tabular-nums">
                     {qty}
                   </span>
                   <button
                     type="button"
                     onClick={() => setQty(product.slug, qty + 1)}
                     aria-label={`Increase quantity of ${product.name}`}
-                    className="grid h-9 w-9 place-items-center rounded-r-full text-lg leading-none hover:bg-ink/5 dark:hover:bg-white/10"
+                    className="grid h-9 w-9 place-items-center text-lg leading-none transition-colors hover:bg-ink hover:text-page"
                   >
                     +
                   </button>
@@ -117,7 +112,7 @@ export function CartView({ products }: { products: Product[] }) {
                 <button
                   type="button"
                   onClick={() => remove(product.slug)}
-                  className="text-sm text-muted underline-offset-4 hover:text-ink hover:underline"
+                  className="label text-muted transition-colors hover:text-accent"
                 >
                   Remove
                 </button>
@@ -127,31 +122,31 @@ export function CartView({ products }: { products: Product[] }) {
         ))}
       </ul>
 
-      <aside className="rounded-2xl border border-line bg-surface p-6">
-        <h2 className="text-lg font-semibold">Order summary</h2>
+      <aside className="bg-page p-6 sm:p-8">
+        <h2 className="label text-muted">Order summary</h2>
 
-        <dl className="mt-5 space-y-3 text-sm">
+        <dl className="mt-6 space-y-3 text-sm">
           <div className="flex justify-between">
             <dt className="text-muted">Subtotal</dt>
-            <dd className="font-medium tabular-nums">{formatPrice(subtotal)}</dd>
+            <dd className="font-mono tabular-nums">{formatPrice(subtotal)}</dd>
           </div>
           <div className="flex justify-between">
             <dt className="text-muted">Shipping</dt>
-            <dd className="font-medium tabular-nums">
+            <dd className="font-mono tabular-nums">
               {shipping === 0 ? "Free" : formatPrice(shipping)}
             </dd>
           </div>
-          <div className="flex justify-between border-t border-line pt-3 text-base">
-            <dt className="font-semibold">Total</dt>
-            <dd className="font-semibold tabular-nums">
+          <div className="mt-2 flex justify-between border-t border-line pt-4">
+            <dt className="font-medium">Total</dt>
+            <dd className="font-mono text-lg tabular-nums">
               {formatPrice(subtotal + shipping)}
             </dd>
           </div>
         </dl>
 
         {toFreeShipping > 0 ? (
-          <p className="mt-4 rounded-xl bg-accent/10 px-4 py-3 text-sm text-accent">
-            Add {formatPrice(toFreeShipping)} more for free shipping.
+          <p className="label mt-5 border border-accent px-4 py-3 text-accent">
+            Add {formatPrice(toFreeShipping)} for free shipping
           </p>
         ) : null}
 
@@ -163,7 +158,7 @@ export function CartView({ products }: { products: Product[] }) {
         >
           Checkout
         </button>
-        <p className="mt-3 text-center text-xs text-muted">
+        <p className="mt-4 text-xs text-muted">
           Checkout is inert in this demo — it needs orders in Postgres and a
           signed-in user first.
         </p>
@@ -171,7 +166,7 @@ export function CartView({ products }: { products: Product[] }) {
         <button
           type="button"
           onClick={clear}
-          className="mt-4 w-full text-sm text-muted underline-offset-4 hover:text-ink hover:underline"
+          className="label mt-6 w-full border border-line py-3 text-muted transition-colors hover:border-ink hover:text-ink"
         >
           Clear cart
         </button>

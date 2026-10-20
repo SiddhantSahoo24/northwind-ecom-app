@@ -1,0 +1,155 @@
+{
+  "drift-open-earbuds": {
+    "src": "/products/drift-open-earbuds.webp",
+    "width": 1400,
+    "height": 933,
+    "alt": "Wireless earbuds resting in an open charging case under red and blue light",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACQAwCdASoUAA0APwForE6rJaQiMAgBYCAJbACdLwAB0cQBt3RAAP7o5qD/SEnZGAtuV1bxeNV6qu0bf6KYssjtVUz7pr4aj/h2n6N3ID1p9X7gIEetugAA",
+    "sourceHash": "71e669b2"
+  },
+  "drift-earbuds-lite": {
+    "src": "/products/drift-earbuds-lite.webp",
+    "width": 1400,
+    "height": 821,
+    "alt": "White wireless earbuds beside their open charging case",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABwAwCdASoUAAwAPwFqrE6rJiQiMAgBYCAJZQAAHIW1QvrD6AAA/u1hANFXOgKFk3X3HwlzN7IGUdLCqQCccs8E1h1TnKDBpOO4dvQsRGtbei30HxNX/I527xzAAA==",
+    "sourceHash": "cec0ef87"
+  },
+  "field-over-ear": {
+    "src": "/products/field-over-ear.webp",
+    "width": 1400,
+    "height": 939,
+    "alt": "Matte black over-ear headphones lying on a pale desk",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAACwAwCdASoUAA0APwForE6rJiQiMAgBYCAJaQAAW4XZf2c6k7S4AAD+7cgoRy03B1HMrjf8nB4ecsRd/3t7qpC7s2Uy7sMkLwUuCLjG66/XyBaRHmGiBAAAAAA=",
+    "sourceHash": "8eab9e1b"
+  },
+  "field-over-ear-sand": {
+    "src": "/products/field-over-ear-sand.webp",
+    "width": 1400,
+    "height": 1867,
+    "alt": "Over-ear headphones in a warm sand colourway on a plain background",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADwBACdASoUABsAPvVoq06qpiQiMAwBUB6JYwCw7CHf5BskqQ1f2z1JmluaLDiuBOAA/u+16FE0LQekaMsCp39RCI68FlSV4mM/1J4sAgVuHZnCH60VbX8RAKYRnYbrniOrJUg/007qvTD0hxgwMhNLc4yvxyYA",
+    "sourceHash": "6ce343cc"
+  },
+  "arc-watch": {
+    "src": "/products/arc-watch.webp",
+    "width": 1400,
+    "height": 1017,
+    "alt": "A round-faced smart watch laid flat with its white strap unfastened",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABwAwCdASoUAA8APwFqrU8rJiQiMAgBYCAJaQAAW+qguF3iwAAA/t52K85XnzACu4KbGQ5v7W4WB4rHzycKA/CgAAA=",
+    "sourceHash": "7e29a2ef"
+  },
+  "arc-watch-pro": {
+    "src": "/products/arc-watch-pro.webp",
+    "width": 1400,
+    "height": 1750,
+    "alt": "A black smart watch with a dark strap on a white surface",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAwBACdASoUABkAPwFyr1CrJyQisBgIAWAgCWcAAC51xmqR/puau8dsSMAA/u+1/obsNmhcL25vJbz/FBMDZrq2Rkbz4gvTnDPfTwFJc6OpKU+Afbs2hPsCeBG1RwBJR4Bjqceg6x3AAA==",
+    "sourceHash": "97241075"
+  },
+  "signal-two": {
+    "src": "/products/signal-two.webp",
+    "width": 1400,
+    "height": 1051,
+    "alt": "A smartphone held in front of a ring of blue light",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRqIAAABXRUJQVlA4IJYAAADQBACdASoUAA8APwFqrE8rJiQiMAgBYCAJbACdMoR3Bbfwf66I6Z+sLmxH4TVAAAD7vH8dEZudeRlYlHzceJhXoRK7aZIh+TAlvG2aDZSxV0p0YWunhXKByeAifP9c1edLbXiM0s/xfwyKd0dCHs8yIxvQuVkeoZVjhyhnBEiJKxAaheydiubPsNETF2unstMFLH0AAAA=",
+    "sourceHash": "dab65e8a"
+  },
+  "signal-two-pro": {
+    "src": "/products/signal-two-pro.webp",
+    "width": 1400,
+    "height": 786,
+    "alt": "Close-up of a smartphone's rear camera array",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAABQBACdASoUAAsAPwFqrU8rJaQiMAgBYCAJZwDImYxEwFfGM9xzWArgmIgAAP5NlaCeuXk5zzOSM1s6J2QVyo6d6W8njmZYfTldfG6m7BTvxwbZS7RD+M4TiOE+k2/WalnvLrRotEC7xX2hP1mHuAAA",
+    "sourceHash": "523ac203"
+  },
+  "signal-aramid-case": {
+    "src": "/products/signal-aramid-case.webp",
+    "width": 1400,
+    "height": 1400,
+    "alt": "A hand holding a slim black woven-aramid phone case",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAACQBACdASoUABQAPwFurlArJiQiqA1RYCAJZwDBzBI/gRzGr57VfNyLfBlJ4AAA9kVkNGR/AX73j7yyBZAhWCtM8dPcYVc7fCWUoBv3tqdjfyaJZh+NonXK6x8aACAyYVhOzki9equzH47djuGRAAAA",
+    "sourceHash": "4a758f5a"
+  },
+  "plate-wireless-charger": {
+    "src": "/products/plate-wireless-charger.webp",
+    "width": 1400,
+    "height": 933,
+    "alt": "A round white wireless charging pad on a wooden surface",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQBACdASoUAA0APwFqrE8rJiQiMAgBYCAJZAC7LwABVm7MKeSO2RM7IAD+PycYXR4bfkzyWyWtQzBtjTAOsvIaGKmGjUndgbUnCI/wAAA=",
+    "sourceHash": "c7e8b559"
+  },
+  "loop-usb-c-cable": {
+    "src": "/products/loop-usb-c-cable.webp",
+    "width": 1400,
+    "height": 2104,
+    "alt": "A coiled white charging cable and puck on a dark background",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAACQBQCdASoUAB4APwFmqk8rJSOiMAgBYCAJZwC0NB+X7lMJHj2UvXu3U/MKVPGvvwVqNeznoAD9zwiz8g9QalHw5geKekT7c4jEvAZqN5H5Jp/U7K8VBcGaVicpeWwKV9kkdl1gEHrGLS0GDY2OIocZ3kKHs7DHzCvmrRKM9wsL+xRVmxtZwCaAFMEqsn34J7uHrEvZO8l6gk2w/Nfz5Q+48pAwDn0HgAA=",
+    "sourceHash": "101c25cf"
+  },
+  "brick-65w-adapter": {
+    "src": "/products/brick-65w-adapter.webp",
+    "width": 1400,
+    "height": 1050,
+    "alt": "A white power adapter with its cable coiled beside it",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACQAwCdASoUAA8APwFqrE6rJiQiMAgBYCAJZwAAW+QP4Q8P1LnAAP7nGvbcGhNv2qJUisCj9qgzOCOSrcRoAlUOKgF9pApKJijdYAAA",
+    "sourceHash": "0449b1ff"
+  },
+  "cat-audio": {
+    "src": "/scene/cat-audio.webp",
+    "width": 1400,
+    "height": 2117,
+    "alt": "Black over-ear headphones photographed against a plain backdrop",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAwCdASoUAB4APwF0sFKrJqQiqAqpYCAJaQAAj/Wd1y71hG4M4mFgAP72ASebfgYJNPc5oEh3mqGb7UAgjMiAZBUrOhY94/p9o2w4Ri0blDrONSWsFwFm2jmBKmPi914M10Va8QUuYAAA",
+    "sourceHash": "dbe59a36"
+  },
+  "cat-wearables": {
+    "src": "/scene/cat-wearables.webp",
+    "width": 1400,
+    "height": 2488,
+    "alt": "A smart watch worn on a wrist, screen lit",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRtYAAABXRUJQVlA4IMoAAAAQBgCdASoUACQAPvlorE6qpiSjKq35UB8JYwC2FBYi01PH0AqEdDdlZ9MMamHuXhlbT41pS6AGSgAA/t/0Ys1v8B+Be6pnq3sCh3WKpX1hRSP0IK/FcY2/k1Z5ZGBCKVf5LzSzXpUVG2IFe/ucvFQQfrN0isGcdYohsvuIGhPKSJ9a9Gb1TjuGEMo5ZoANQtPtxtq+7NaZquVZ3FYMqhzo79fsPe+Ybezaaf2kTaoY39oSW6YOSj5HtCP5onU9qfpppYNUVyfLAAAA",
+    "sourceHash": "f52a2e3c"
+  },
+  "cat-phone": {
+    "src": "/scene/cat-phone.webp",
+    "width": 1400,
+    "height": 2475,
+    "alt": "A smartphone and earbuds on a dark wooden table",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRsoAAABXRUJQVlA4IL4AAAAwBgCdASoUACMAPwFsrFKrJSOiqrgMAWAgCWQAs7PBgXBIznaYwxlF/dlcZSew3fB4SUJJfBkn56VgAP7N63as6T+WVI4pIL2W2HWsZcNfLnDbcq3jaN+RSwYZPQ8HOu4r1vnpzSyKjdkR7hurG9IK2KCUKv3wPu44x2JJWM9v59FPAGgvS+73sg7kfbxwF36DyNQ7eqzRPwg5FSvBQnjYZ1lw2ZP8UT41/uj6i3iSnqOk57rPxmS3uSMWAAAA",
+    "sourceHash": "ad672fa6"
+  },
+  "cat-power": {
+    "src": "/scene/cat-power.webp",
+    "width": 1400,
+    "height": 933,
+    "alt": "Headphones and a phone arranged on a white desk",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAwCdASoUAA0APwFqrU8rJiQiMAgBYCAJZwAAXBO2w2atx8TkegAA/u1HdG83oCUCyyYIspVD81bIQimN/fnmQlgGQuRsPvd6rrY32CmNy0f7ufGMkkSxBwAAAA==",
+    "sourceHash": "70ee4993"
+  },
+  "editorial-dark": {
+    "src": "/scene/editorial-dark.webp",
+    "width": 1400,
+    "height": 991,
+    "alt": "A laptop glowing against a dark room, lit in red and orange",
+    "credit": "Unsplash",
+    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoUAA4APwForE6rJaQiMAgBYCAJZwAAW+uW+a+wIAD+8pjQkJM2g+20TfCLTChNGof3mxCdJQFt2TcCAAA=",
+    "sourceHash": "cb02e0ce"
+  }
+}
